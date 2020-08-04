@@ -7,7 +7,8 @@
     <div class="row">
         <div class="col col-sm-10 col-lg-8 mx-auto">
             @if($project->image)
-            <img class="card-img-top" src="{{ asset('storage/'.$project->image) }}" alt="{{ $project->title }}">
+            <img class="card-img-top" style="height:250px; object-fit: cover"
+                src="{{ asset('storage/'.$project->image) }}" alt="{{ $project->title }}">
             @endif
 
             <div class="bg-white p-5 shadow rounded">

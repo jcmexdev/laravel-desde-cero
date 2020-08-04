@@ -13,9 +13,10 @@
     <p class="lead text-secondary">Proyectos realizados Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
     <div class="d-flex flex-wrap justify-content-between align-items-start">
         @forelse($projects as $project)
-        <div class="card" style="width: 18rem;">
+        <div class="card mb-2" style="width: 18rem;">
             @if($project->image)
-            <img class="card-img-top" src="{{ asset('storage/'.$project->image) }}" alt="{{ $project->title }}">
+            <img class="card-img-top" src="{{ asset('storage/'.$project->image) }}" alt="{{ $project->title }}"
+                style="height:150px; object-fit:cover;">
             @endif
 
             <div class="card-body">
