@@ -14,7 +14,8 @@
         "laravel/tinker": "^1.0"
     },
     "require-dev": {
-        "facade/ignition": "^1.4",
+        "barryvdh/laravel-ide-helper": "^2.7",
+        "facade/ignition": "1.9.*",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
@@ -34,7 +35,9 @@
         "psr-4": {
             "App\\": "app/"
         },
-        "files": ["app/helpers.php"],
+        "files": [
+            "app/helpers.php"
+        ],
         "classmap": [
             "database/seeds",
             "database/factories"
