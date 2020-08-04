@@ -30,10 +30,19 @@ class SaveProjectRequest extends FormRequest
                 'required',
                 Rule::unique('projects')->ignore($this->route('project'))
             ],
+            'image' => [
+                $this->route('project') ? 'nullable' : 'required',
+                'mimes:jpg,jpeg,png'
+            ],
             'description' => 'required',
         ];
     }
 
+    /**
+     * Set custom validation messages for each fiel
+     *
+     * @return array
+     */
     public function messages()
     {
         return [
