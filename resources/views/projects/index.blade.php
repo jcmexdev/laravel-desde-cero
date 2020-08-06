@@ -24,7 +24,10 @@
                     <a href="{{ route('projects.show', $project) }}">{{ $project->title }}</a>
                 </h5>
                 <p class="card-text text-truncate">{{ $project->description }}</p>
-                <a class="btn btn-primary btn-sm" href="{{ route('projects.show', $project) }}">Ver más...</a>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a class="btn btn-primary btn-sm" href="{{ route('projects.show', $project) }}">Ver más...</a>
+                    <a href="#" class="badge badge-secondary">{{ optional($project->category)->name }}</a>
+                </div>
             </div>
         </div>
         @empty

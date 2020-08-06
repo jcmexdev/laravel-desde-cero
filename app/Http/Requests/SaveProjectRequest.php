@@ -36,7 +36,7 @@ class SaveProjectRequest extends FormRequest
             ],
             'category_id' => [
                 'required',
-                'exist:categories,id'
+                'exists:categories,id'
             ],
             'description' => 'required',
         ];
