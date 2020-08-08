@@ -6,6 +6,7 @@ use App\Category;
 use App\Events\ProjectSaved;
 use App\Http\Requests\SaveProjectRequest;
 use App\Project;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
@@ -42,9 +43,12 @@ class ProjectController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create-projects');
+
         return view('projects.create', [
             'project' => new Project,
             'categories' => Category::pluck('name', 'id')

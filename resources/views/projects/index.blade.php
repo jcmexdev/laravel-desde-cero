@@ -15,7 +15,9 @@
         @endisset
 
         @auth
-        <a class="btn btn-primary" href="{{ route('projects.create') }}">Crear proyecto</a>
+            @can('create-projects')
+                    <a class="btn btn-primary" href="{{ route('projects.create') }}">Crear proyecto</a>
+            @endcan
         @endauth
     </div>
     <p class="lead text-secondary">Proyectos realizados Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
