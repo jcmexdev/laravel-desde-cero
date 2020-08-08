@@ -26,6 +26,7 @@ class ProjectController extends Controller
     public function index()
     {
         return view('projects.index', [
+            'newProject' => new Project,
             'projects' => Project::with('category')->latest()->paginate()
         ]);
     }
@@ -47,10 +48,10 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $this->authorize('create-projects');
+        $this->authorize('create', $project = new Project);
 
         return view('projects.create', [
-            'project' => new Project,
+            'project' => $project,
             'categories' => Category::pluck('name', 'id')
         ]);
     }
@@ -73,10 +74,11 @@ class ProjectController extends Controller
     /**
      * @param Project $project
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Project $project)
     {
-
+        $this->authorize('update', $project);
         return view('projects.edit', [
             'project' => $project,
             'categories' => Category::pluck('name', 'id')
@@ -87,9 +89,12 @@ class ProjectController extends Controller
      * @param Project $project
      * @param SaveProjectRequest $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Project $project, SaveProjectRequest $request)
     {
+        $this->authorize('update', $project);
+
         if ($request->hasFile('image')) {
             Storage::delete($project->image);
             $project->fill($request->validated());
@@ -112,6 +117,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $this->authorize('delete', $project);
+
         Storage::delete($project->image);
         $project->delete();
 

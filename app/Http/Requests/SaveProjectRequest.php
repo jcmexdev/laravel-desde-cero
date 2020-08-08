@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Project;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
@@ -15,7 +16,7 @@ class SaveProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('create-projects');
+        return true;
     }
 
     /**

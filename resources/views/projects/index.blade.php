@@ -15,7 +15,7 @@
         @endisset
 
         @auth
-            @can('create-projects')
+            @can('create', $newProject)
                     <a class="btn btn-primary" href="{{ route('projects.create') }}">Crear proyecto</a>
             @endcan
         @endauth
