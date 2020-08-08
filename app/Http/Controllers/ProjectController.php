@@ -27,7 +27,8 @@ class ProjectController extends Controller
     {
         return view('projects.index', [
             'newProject' => new Project,
-            'projects' => Project::with('category')->latest()->paginate()
+            'projects' => Project::with('category')->latest()->paginate(),
+            'deletedProjects' => Project::onlyTrashed()->with('category')->get()
         ]);
     }
 
@@ -119,9 +120,36 @@ class ProjectController extends Controller
     {
         $this->authorize('delete', $project);
 
-        Storage::delete($project->image);
+        //Storage::delete($project->image);
         $project->delete();
 
         return redirect()->route('projects.index')->with('status', 'El proyecto fue eliminado con éxito.');
+    }
+
+    /**
+     * @param $projectUrl
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function restore($projectUrl)
+    {
+        $project = Project::withTrashed()->whereUrl($projectUrl)->firstOrFail();
+        $this->authorize('restore', $project);
+        $project->restore();
+        return redirect()->route('projects.index')->with('status', 'El proyecto fue restaurado con éxito.');
+    }
+
+    /**
+     * @param $projectUrl
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function forceDelete($projectUrl)
+    {
+        $project = Project::withTrashed()->whereUrl($projectUrl)->firstOrFail();
+        $this->authorize('force-delete', $project);
+        Storage::delete($project->image);
+        $project->forceDelete();
+        return redirect()->route('projects.index')->with('status', 'El proyecto fue eliminado permanentemente.');
     }
 }
